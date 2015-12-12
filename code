@@ -1,0 +1,56 @@
+import numpy as np
+nbug = 3
+dbug = np.array(['+','+','+'])
+ebug = np.array(['-','-','-'])
+limit = 3
+time = np.array([2,1,2])
+limitP = np.array([['0','0','0'],['0','0','-'],['0','-','-']])
+reP = np.array([['0','-','-'],['-','-','+'],['-','+','+']])
+
+def bug() :
+    print "bug : %d ,"%nbug,
+    print "(",dbug,") ,",
+    print "limit : %d "%limit
+    for i in range (0,limit):
+        print 'P%d  '%(i+1),
+        print time[i],
+        print " (",
+        for j in range (0,nbug):            
+            print limitP[i][j],
+        print ")  (",
+        for k in range (0,nbug):      
+            print reP[i][k],
+        print ")  "
+    print ' '
+    
+#######---show input---#############
+    t = 0
+    end = 0
+    while(end == 0): 
+        if(np.array_equal(dbug,ebug)):
+            end = 1
+        else :      
+            b = np.array([0,0,0])
+            for i in range (0,limit):   
+
+                for j in range (0,nbug): 
+                    if dbug[j] == limitP[i][j] and limitP[i][j] == '+' :               
+                        b[i] += 1
+                    elif dbug[j] == limitP[i][j] and limitP[i][j] == '-' :
+                        b[i] += 2
+                    elif dbug[j] != limitP[i][j] and limitP[i][j] == '0' :
+                        b[i] += 0 
+                    else:
+                        b[i] -= 1
+           
+            print "P",(np.argmax(b)+1),"  ",time[np.argmax(b)],"  ",
+            t += time[np.argmax(b)]
+            i = np.argmax(b)
+            for j in range (0,nbug):
+                if(reP[i][j] == '0'):
+                    dbug[j] = dbug[j]                   
+                else:
+                    dbug[j] = reP[i][j]
+            print dbug
+            print ' '
+    print "time = %d"%t," ",dbug
