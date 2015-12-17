@@ -1,13 +1,19 @@
 import numpy as np
+
+#######---input---#################
+
 nbug = 3
 dbug = np.array(['+','+','+'])
 ebug = np.array(['-','-','-'])
 limit = 3
-time = np.array([2,1,2])
+time = np.array([1,1,2])
 limitP = np.array([['0','0','0'],['0','0','-'],['0','-','-']])
-reP = np.array([['0','-','-'],['-','-','+'],['-','+','+']])
+reP = np.array([['0','0','-'],['0','-','+'],['-','+','+']])
+
+#######---end input---#################
 
 def bug() :
+#######---show input---#############
     print "bug : %d ,"%nbug,
     print "(",dbug,") ,",
     print "limit : %d "%limit
@@ -23,16 +29,22 @@ def bug() :
         print ")  "
     print ' '
     
-#######---show input---#############
+#######---end show input---#############
+
+    
     t = 0
     end = 0
+    print "bug --> ",dbug
+    print " "
     while(end == 0): 
         if(np.array_equal(dbug,ebug)):
             end = 1
         else :      
-            b = np.array([0,0,0])
+            b = np.zeros([limit])
             for i in range (0,limit):   
-
+##                print "P",(i+1),"  ",time[i],"  ",
+##                print dbug,
+##                print limitP[i],
                 for j in range (0,nbug): 
                     if dbug[j] == limitP[i][j] and limitP[i][j] == '+' :               
                         b[i] += 1
@@ -41,7 +53,11 @@ def bug() :
                     elif dbug[j] != limitP[i][j] and limitP[i][j] == '0' :
                         b[i] += 0 
                     else:
-                        b[i] -= 1
+                        b[i] -= 99
+
+##                print reP[i],
+##                print  b,
+##                print ' '
            
             print "P",(np.argmax(b)+1),"  ",time[np.argmax(b)],"  ",
             t += time[np.argmax(b)]
@@ -54,3 +70,7 @@ def bug() :
             print dbug
             print ' '
     print "time = %d"%t," ",dbug
+        
+                 
+
+    
